@@ -1,7 +1,10 @@
 <div class="container-fluid">
     <div class="row p-3">
         <div class="col-lg-12 border rounded">
-            <h2 class="h2 text-center fw-bold">Input Types</h2>
+            <div class="d-flex justify-content-between">
+                <h2 class="h2 text-center fw-bold">Input Types</h2>
+                <a class="text-primary text-decoration-none" [routerLink]="'/view-data'">View Data</a>
+            </div>
             <hr>
             <form class="row g-3 mb-2" [formGroup]="frmInput" (ngSubmit)="onSubmit()">
                 <div class="col-lg-6">
@@ -73,7 +76,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label for="" class="form-label">Range</label>
-                    <input type="range" class="form-range" formControlName="range">
+                    <input type="range" class="form-range range-input" formControlName="range" min="10" max="100">
                 </div>
                 <div class="col-lg-6">
                     <label for="" class="form-label">Choose color</label>
@@ -85,7 +88,7 @@
                 </div>
                 <div class="col-lg-12">
                     <label for="" class="form-label">Profile picture</label>
-                    <input type="file" class="form-control" formControlName="profile">
+                    <input type="file" class="form-control" (change)="onSelectImage($event)">
                 </div>
                 <div class="col-lg-12">
                     <button type="submit" class="btn btn-md btn-primary">Submit</button>

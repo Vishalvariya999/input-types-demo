@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InputTypesComponent } from './features/components/input-types/input-types.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewDataComponent } from './features/components/view-data/view-data.component';
 
 @NgModule({
-  declarations: [AppComponent, InputTypesComponent],
+  declarations: [AppComponent, InputTypesComponent, ViewDataComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],

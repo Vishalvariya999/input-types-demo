@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,13 +6,15 @@ import {
   FormArray,
   FormControl,
 } from '@angular/forms';
+import { InputService } from '../../services/input.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-input-types',
   templateUrl: './input-types.component.html',
   styleUrls: ['./input-types.component.scss'],
 })
-export class InputTypesComponent {
+export class InputTypesComponent implements OnInit {
   public frmInput!: FormGroup;
   public hobies: any = [
     { name: 'Reading', value: 'Reading' },
@@ -20,9 +22,16 @@ export class InputTypesComponent {
     { name: 'Playing', value: 'Playing' },
     { name: 'Danceing', value: 'Danceing' },
   ];
-  constructor(private fb: FormBuilder) {
+  public thumbColor: string = '#4c0bce';
+  constructor(
+    private fb: FormBuilder,
+    private inputService: InputService,
+    private router: Router
+  ) {
     this.frmValidation();
   }
+
+  ngOnInit(): void {}
 
   private frmValidation() {
     this.frmInput = this.fb.group({
@@ -42,7 +51,7 @@ export class InputTypesComponent {
       range: ['', Validators.required],
       fcolor: ['', Validators.required],
       hnumber: ['401, Man complex', Validators.required],
-      profile: ['', Validators.required],
+      // profile: ['', Validators.required],
     });
   }
 
@@ -53,13 +62,6 @@ export class InputTypesComponent {
   get fHobbie() {
     return this.fControl['hobbies'] as FormArray;
   }
-
-  // public onSelectHobbie(e: any) {
-  //   console.log('e', e.target.value);
-  //   if (e.target.value) {
-  //     this.fHobbie.push(e.target.value);
-  //   }
-  // }
 
   public onSelectHobbie(event: any, index: number) {
     console.log('event.target.value', event.target.value);
@@ -78,16 +80,21 @@ export class InputTypesComponent {
     }
   }
 
+  public onSelectImage(e: any) {
+    console.log('e.target.file', e.target.files[0]);
+  }
+
   public onSubmit() {
     if (this.frmInput.invalid) {
       console.log('Invalid details');
       return;
     } else {
       const data = {
-        // hobbies:,
         ...this.frmInput.value,
       };
-      console.log('this.frmInput.value :>>', this.frmInput.value);
+      console.log('this.frmInpu.value :>>', this.frmInput.value);
+      this.inputService.addData(data);
+      this.router.navigate(['/view-data']);
     }
   }
 }
