@@ -1,3 +1,4 @@
+import { SweetAlertService } from './../../services/sweet-alert.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -26,7 +27,8 @@ export class InputTypesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private inputService: InputService,
-    private router: Router
+    private router: Router,
+    private sweetAlertService: SweetAlertService
   ) {
     this.frmValidation();
   }
@@ -93,8 +95,17 @@ export class InputTypesComponent implements OnInit {
         ...this.frmInput.value,
       };
       console.log('this.frmInpu.value :>>', this.frmInput.value);
-      this.inputService.addData(data);
-      this.router.navigate(['/view-data']);
+      this.inputService
+        .addData(data)
+        .then((res: any) => {
+          console.log('res', res);
+          this.sweetAlertService.success('Insert successfully.!');
+          this.router.navigate(['/view-data']);
+        })
+        .catch((err: any) => {
+          console.log('err', err);
+          this.sweetAlertService.error('Some thing went wrong.!');
+        });
     }
   }
 }

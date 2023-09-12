@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -67,10 +68,11 @@ export class InputService {
     },
   ];
 
-  constructor() {}
+  constructor(private afs: AngularFirestore) {}
 
   public addData(data: any) {
-    return this.userData.push(data);
+    // return this.userData.push(data);
+    return this.afs.collection('user-details').add(data);
   }
 
   public deleteReco(id: number) {
