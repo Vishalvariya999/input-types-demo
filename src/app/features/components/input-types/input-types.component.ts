@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { InputService } from '../../services/input.service';
 import { Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-input-types',
@@ -17,6 +19,10 @@ import { Router } from '@angular/router';
 })
 export class InputTypesComponent implements OnInit {
   public frmInput!: FormGroup;
+  public imageSelectEvent: any;
+  public path: any;
+  public downloadURL!: Observable<any>;
+
   public hobies: any = [
     { name: 'Reading', value: 'Reading' },
     { name: 'Writing', value: 'Writing' },
@@ -28,7 +34,8 @@ export class InputTypesComponent implements OnInit {
     private fb: FormBuilder,
     private inputService: InputService,
     private router: Router,
-    private sweetAlertService: SweetAlertService
+    private sweetAlertService: SweetAlertService,
+    private angularFireStorage: AngularFireStorage
   ) {
     this.frmValidation();
   }
@@ -83,18 +90,58 @@ export class InputTypesComponent implements OnInit {
   }
 
   public onSelectImage(e: any) {
-    console.log('e.target.file', e.target.files[0]);
+    console.log('e.target.file :>>', e.target.files[0]);
+    this.imageSelectEvent = e.target.files[0];
   }
+
+  // addImg(event: any) {
+  //   const n = Date();
+  //   const file = event.target.files[0];
+  //   const filePath = `productImg/${n}`;
+  //   const fileRef = this.angularFireStorage.ref(filePath);
+  //   const task = this.angularFireStorage.upload(`productImg/${n}`, file);
+  //   return new Promise((resolve, reject) => {
+  //     task
+  //       .snapshotChanges()
+  //       .pipe(
+  //         finalize(() => {
+  //           this.downloadURL = fileRef.getDownloadURL();
+  //           this.downloadURL.subscribe((url: any) => {
+  //             if (url) {
+  //               this.path = url;
+  //               resolve(this.path);
+  //             }
+  //           });
+  //         })
+  //       )
+  //       .subscribe((resUrl: any) => {});
+  //   });
+  // }
 
   public onSubmit() {
     if (this.frmInput.invalid) {
       console.log('Invalid details');
       return;
     } else {
+      // await this.addImg(this.imageSelectEvent);
+      // const data = new FormData();
+      // data.append('title', 'Test');
+      // data.append('date', '2020-02-15');
+      // data.append('profile', this.imageSelectEvent);
+      // console.log('this.frmInpu.value :>>', this.frmInput.value);
+      // this.inputService.postImageData(data).subscribe({
+      //   next: (res: any) => {
+      //     console.log('res', res);
+      //   },
+      //   error: (err: any) => {
+      //     console.log('err', err);
+      //   },
+      // });
       const data = {
+        // profile: this.path,
         ...this.frmInput.value,
       };
-      console.log('this.frmInpu.value :>>', this.frmInput.value);
+      console.log('this.imageSelectEvent', this.imageSelectEvent);
       this.inputService
         .addData(data)
         .then((res: any) => {

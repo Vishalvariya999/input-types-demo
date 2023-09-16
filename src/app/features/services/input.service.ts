@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -70,15 +73,24 @@ export class InputService {
 
   constructor(private afs: AngularFirestore) {}
 
+  public getData() {
+    return this.afs.collection('user-details').snapshotChanges();
+  }
+
   public addData(data: any) {
     // return this.userData.push(data);
     return this.afs.collection('user-details').add(data);
   }
 
-  public deleteReco(id: number) {
-    const newArray = this.userData.filter((d: any) => {
-      return d.id !== id;
-    });
-    return (this.userData = newArray);
+  public deleteReco(id: any) {
+    return this.afs.collection('user-details').doc(id).delete();
   }
+
+  // public postImageData(data: any): Observable<any> {
+  //   return this.http.post<any>(`${this.BASE_Url}create-post`, data);
+  // }
+
+  // public getImageData(): Observable<any> {
+  //   return this.http.get<any>(`${this.BASE_Url}get-post`);
+  // }
 }

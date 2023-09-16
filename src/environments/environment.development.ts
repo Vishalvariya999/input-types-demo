@@ -1,4 +1,5 @@
 export const environment = {
+  production: true,
   firebaseConfig: {
     apiKey: 'AIzaSyC4d97xPbYWpN3o66avG3G9_KPozdeveyY',
     authDomain: 'file-upload-crud.firebaseapp.com',

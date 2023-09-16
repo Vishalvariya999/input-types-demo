@@ -9,9 +9,10 @@ import { ViewDataComponent } from './features/components/view-data/view-data.com
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { HttpClientModule } from '@angular/common/http';
+import 'firebase/storage';
 
 @NgModule({
   declarations: [AppComponent, InputTypesComponent, ViewDataComponent],
@@ -20,11 +21,16 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp({
+      apiKey: environment.firebaseConfig.apiKey,
+      authDomain: environment.firebaseConfig.authDomain,
+      projectId: environment.firebaseConfig.projectId,
+      storageBucket: environment.firebaseConfig.storageBucket,
+    }),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
