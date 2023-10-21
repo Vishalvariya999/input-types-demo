@@ -112,6 +112,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "input-type-demo:build:production",
+            "firebaseProject": "file-upload-crud",
+            "firebaseHostingSite": "file-upload-crud"
+          }
         }
       }
     }

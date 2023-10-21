@@ -12,8 +12,20 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { HttpClientModule } from '@angular/common/http';
-import 'firebase/storage';
+// import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+// import { provideAuth, getAuth } from '@angular/fire/auth';
+// import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+// import { provideStorage, getStorage } from '@angular/fire/storage';
 
+const firebaseConfig = {
+  apiKey: 'AIzaSyC4d97xPbYWpN3o66avG3G9_KPozdeveyY',
+  authDomain: 'file-upload-crud.firebaseapp.com',
+  projectId: 'file-upload-crud',
+  storageBucket: 'file-upload-crud.appspot.com',
+  messagingSenderId: '372859072809',
+  appId: '1:372859072809:web:42ffba2f90409c4e458738',
+  measurementId: 'G-CJZRSG3GDB',
+};
 @NgModule({
   declarations: [AppComponent, InputTypesComponent, ViewDataComponent],
   imports: [
@@ -21,16 +33,15 @@ import 'firebase/storage';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp({
-      apiKey: environment.firebaseConfig.apiKey,
-      authDomain: environment.firebaseConfig.authDomain,
-      projectId: environment.firebaseConfig.projectId,
-      storageBucket: environment.firebaseConfig.storageBucket,
-    }),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireStorageModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
     HttpClientModule,
+    // provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    // provideAuth(() => getAuth()),
+    // provideFirestore(() => getFirestore()),
+    // provideStorage(() => getStorage()),
   ],
   providers: [],
   bootstrap: [AppComponent],

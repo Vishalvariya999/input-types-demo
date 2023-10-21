@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "file-upload-crud": {
+      "hosting": {
+        "input-type-demo": [
+          "file-upload-crud"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "file-upload-crud"
+  }
+}

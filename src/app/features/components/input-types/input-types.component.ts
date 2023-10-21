@@ -1,5 +1,5 @@
 import { SweetAlertService } from './../../services/sweet-alert.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,7 +18,9 @@ import { Observable, finalize } from 'rxjs';
   styleUrls: ['./input-types.component.scss'],
 })
 export class InputTypesComponent implements OnInit {
+  // public angularFireStorage = inject(AngularFireStorage);
   public frmInput!: FormGroup;
+  public showError: boolean = false;
   public imageSelectEvent: any;
   public path: any;
   public downloadURL!: Observable<any>;
@@ -34,8 +36,7 @@ export class InputTypesComponent implements OnInit {
     private fb: FormBuilder,
     private inputService: InputService,
     private router: Router,
-    private sweetAlertService: SweetAlertService,
-    private angularFireStorage: AngularFireStorage
+    private sweetAlertService: SweetAlertService // private angularFireStorage: AngularFireStorage
   ) {
     this.frmValidation();
   }
@@ -90,8 +91,9 @@ export class InputTypesComponent implements OnInit {
   }
 
   public onSelectImage(e: any) {
-    console.log('e.target.file :>>', e.target.files[0]);
+    // console.log('e.target.file :>>', e.target.files[0]);
     this.imageSelectEvent = e.target.files[0];
+    console.log('this.imageSelectEvent', this.imageSelectEvent);
   }
 
   // addImg(event: any) {
